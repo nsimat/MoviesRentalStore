@@ -1,0 +1,27 @@
+﻿<div class="bs-component">
+    <nav role="navigation" class="navbar navbar-expand-lg navbar-dark fixed-top bg-primary">        
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="False" aria-label="Toggle Navigation">
+                    <span class="navbar-toggler-icon"><img src="@Url.Content("~/Images/icon8_movie.png")" alt="MoviesRentalStore_Logo" class="img-responsive"/></span>                    
+                    @*<span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>*@
+                </button>
+                @Html.ActionLink("MoviesRentalStore", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">@Html.ActionLink("Accueil", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item active">@Html.ActionLink("À propos de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item active">@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Rechercher">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Rechercher</button>
+                </form>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+</div>
