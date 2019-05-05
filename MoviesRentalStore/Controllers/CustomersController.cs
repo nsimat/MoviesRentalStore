@@ -1,4 +1,5 @@
 ﻿using MoviesRentalStore.Models;
+using System.Data.Entity;
 using MoviesRentalStore.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,17 +11,23 @@ namespace MoviesRentalStore.Controllers
 {
     public class CustomersController : Controller
     {
+        private ApplicationDbContext _context;
+
+        public CustomersController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
         // GET: Customers
         public ActionResult Index()
         {
-            var customers = new List<Customer>
-            {
-                new Customer{ Id = 1, Name = "Igor Masamuna"},
-                new Customer{ Id = 2, Name = "Mike Gregory"},
-                new Customer{ Id = 3, Name = "Anny Kizola"}
-            };
+            var customers = _context.Customers.Include(x => x.MembershipType).ToList();
 
-            ViewBag.Customers = customers;
+            //ViewBag.Customers = customers;
 
 
             var movie = new Movie() { Name = "Romance à Kinshsa" };
@@ -34,23 +41,24 @@ namespace MoviesRentalStore.Controllers
             };
 
             ViewBag.Movies = movies;
-            return View();
-        }
+            return View(customers);
+        }        
 
         public ActionResult Edit(int id)
         {
-            var customers = new List<Customer>
-            {
-                new Customer{ Id = 1, Name = "Igor Masamuna"},
-                new Customer{ Id = 2, Name = "Mike Gregory"},
-                new Customer{ Id = 3, Name = "Anny Kizola"}
-            };
-
-            var customer = customers.Find(x => x.Id == id);
-
-            ViewBag.Name = customer.Name;
+            var customer = _context.Customers.SingleOrDefault(x => x.Id == id);
           
-            return View();
+            return View(customer);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+
+            if (customer == null)
+                return HttpNotFound();
+
+            return View(customer);
         }
     }
 }
