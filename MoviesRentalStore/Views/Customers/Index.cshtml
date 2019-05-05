@@ -11,7 +11,7 @@
     <thead>
         <tr>
             <th scope="col"><h2>Customer</h2></th>
-            <th scope="col"><h2>Discount Rate</h2></th>
+            <th scope="col"><h2>Membership Type</h2></th>
         </tr>
     </thead>
 
@@ -21,7 +21,7 @@
             <tr class="table-active">
                 <td>@Html.ActionLink(customer.Name, "Details", "Customers", new {Id = customer.Id } , new { @scope="row" })</td>
                 @*<th scope="row"><a href="~/Customers/Edit/@customer.Id"><h3>@customer.Name</h3></a></th>*@
-                <td>@customer.MembershipType.DiscountRate%</td>
+                <td>@customer.MembershipType.Name</td>
             </tr>
         }
     </tbody>
