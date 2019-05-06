@@ -235,9 +235,22 @@
     <Compile Include="Migrations\201905052058586_AddBirthdateToCustomer.Designer.cs">
       <DependentUpon>201905052058586_AddBirthdateToCustomer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905061936526_AddGenreModel.cs" />
+    <Compile Include="Migrations\201905061936526_AddGenreModel.Designer.cs">
+      <DependentUpon>201905061936526_AddGenreModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905062051265_CompleteMovieModel.cs" />
+    <Compile Include="Migrations\201905062051265_CompleteMovieModel.Designer.cs">
+      <DependentUpon>201905062051265_CompleteMovieModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905062126272_PopulateGenre.cs" />
+    <Compile Include="Migrations\201905062126272_PopulateGenre.Designer.cs">
+      <DependentUpon>201905062126272_PopulateGenre.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MembershipType.cs" />
@@ -356,6 +369,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905052058586_AddBirthdateToCustomer.resx">
       <DependentUpon>201905052058586_AddBirthdateToCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905061936526_AddGenreModel.resx">
+      <DependentUpon>201905061936526_AddGenreModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905062051265_CompleteMovieModel.resx">
+      <DependentUpon>201905062051265_CompleteMovieModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905062126272_PopulateGenre.resx">
+      <DependentUpon>201905062126272_PopulateGenre.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
