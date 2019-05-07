@@ -27,20 +27,20 @@ namespace MoviesRentalStore.Controllers
         {
             var customers = _context.Customers.Include(x => x.MembershipType).ToList();
 
-            //ViewBag.Customers = customers;
+            ////ViewBag.Customers = customers;
 
 
-            var movie = new Movie() { Name = "Romance à Kinshsa" };
-            ViewBag.Movie = movie;
+            //var movie = new Movie() { Name = "Romance à Kinshsa" };
+            //ViewBag.Movie = movie;
 
-            var movies = new List<Movie>
-            {
-                new Movie{ Name = "Trois morts à zéro"},
-                new Movie{ Name = "Mission suicide à Singapour"},
-                new Movie{ Name = "Inferno"}
-            };
+            //var movies = new List<Movie>
+            //{
+            //    new Movie{ Name = "Trois morts à zéro"},
+            //    new Movie{ Name = "Mission suicide à Singapour"},
+            //    new Movie{ Name = "Inferno"}
+            //};
 
-            ViewBag.Movies = movies;
+            //ViewBag.Movies = movies;
             return View(customers);
         }        
 

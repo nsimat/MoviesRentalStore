@@ -1,0 +1,28 @@
+﻿@model IEnumerable<MoviesRentalStore.Models.Movie>
+@{
+    ViewBag.Title = "Movies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_NavBar")
+
+<h1>Movies</h1>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th scope="col"><h2>Movie</h2></th>
+            <th scope="col"><h2>Genre</h2></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr class="table-active">
+                <td>@Html.ActionLink(movie.Name, "Details", "Movies", new { Id = movie.Id }, new { @scope = "row" })</td>                
+                <td>@movie.Genre.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
