@@ -35,10 +35,24 @@ namespace MoviesRentalStore.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CustomerFormViewModel viewModel)//(Customer customer)
+        public ActionResult Save(CustomerFormViewModel viewModel)//(Customer customer)
         {
             Customer customer = viewModel.Customer;
-            _context.Customers.Add(customer);
+
+            if(customer.Id == 0)
+            {
+                _context.Customers.Add(customer);
+            }
+            else
+            {
+                var customerInDB = _context.Customers.Single(c => c.Id == customer.Id);
+
+                customerInDB.Name = customer.Name;
+                customerInDB.BirthDate = customer.BirthDate;
+                customerInDB.MembershipTypeId = customer.MembershipTypeId;
+                customerInDB.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+            }
+            
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Customers");
