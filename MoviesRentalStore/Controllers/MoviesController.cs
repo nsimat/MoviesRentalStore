@@ -83,16 +83,38 @@ namespace MoviesRentalStore.Controllers
             return View("MovieForm", viewModel);
         }
 
+        [HttpPost]
         public ActionResult Save(Movie movie)//(MovieFormViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new MovieFormViewModel
+                {
+                    Genres = _context.Genres.ToList(),
+                    Movie = movie
+                };
+
+                return View("MovieForm", viewModel);
+            }
+
             if (movie.Id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
+                movie.NumberAvailable = movie.NumberInStock;
                 _context.Movies.Add(movie);
+            }                
             else
             {
                 var movieInDB = _context.Movies.Single(m => m.Id == movie.Id);
 
-
+                movieInDB.Name = movie.Name;
+                movieInDB.GenreId = movie.GenreId;
+                movieInDB.ReleaseDate = movie.ReleaseDate;
+                movieInDB.NumberInStock = movie.NumberInStock;
             }
+
+            _context.SaveChanges();
+
             return RedirectToAction("Index", "Movies");
         }
 
