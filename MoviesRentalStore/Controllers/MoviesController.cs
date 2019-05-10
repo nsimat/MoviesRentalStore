@@ -46,22 +46,7 @@ namespace MoviesRentalStore.Controllers
             };
 
             return View(viewModel);
-        }
-
-        public ActionResult Edit(int id)
-        {
-            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
-
-            if (movie == null)
-                HttpNotFound();
-            var viewModel = new MovieFormViewModel
-            {
-                Movie = movie,
-                Genres = _context.Genres.ToList()
-            };
-
-            return View("MovieForm", viewModel);
-        }
+        }  
 
         //Movies
         public ActionResult Index()
@@ -76,7 +61,7 @@ namespace MoviesRentalStore.Controllers
             var genres = _context.Genres.ToList();
 
             var viewModel = new MovieFormViewModel
-            {
+            {                
                 Genres = genres
             };
 
@@ -84,14 +69,14 @@ namespace MoviesRentalStore.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)//(MovieFormViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                var viewModel = new MovieFormViewModel
+                var viewModel = new MovieFormViewModel(movie)
                 {
-                    Genres = _context.Genres.ToList(),
-                    Movie = movie
+                    Genres = _context.Genres.ToList()
                 };
 
                 return View("MovieForm", viewModel);
@@ -116,6 +101,20 @@ namespace MoviesRentalStore.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Movies");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+
+            if (movie == null)
+                HttpNotFound();
+            var viewModel = new MovieFormViewModel(movie)
+            {                
+                Genres = _context.Genres.ToList()
+            };
+
+            return View("MovieForm", viewModel);
         }
 
         public ActionResult Details(int id)

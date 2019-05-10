@@ -33,3 +33,8 @@ textarea {
     background: pink;
     border: 2px solid red;
 }
+
+.validation-summary-errors {
+    color: red;
+    font-weight: bold;
+}
