@@ -3,6 +3,12 @@
     padding-bottom: 20px;
 }
 
+/* For the table header */
+thead th {
+    background-color: #00ffff;
+    color: black;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -38,3 +44,4 @@ textarea {
     color: red;
     font-weight: bold;
 }
+

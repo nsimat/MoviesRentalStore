@@ -2,6 +2,7 @@
 using MoviesRentalStore.Dtos;
 using MoviesRentalStore.Models;
 using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -22,7 +23,10 @@ namespace MoviesRentalStore.Controllers.Api
         // GET: /api/Customers
         public IEnumerable<CustomerDto> GetAllCustomers()
         {
-            return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            return _context.Customers
+                .Include(c => c.MembershipType)
+                .ToList()
+                .Select(Mapper.Map<Customer, CustomerDto>);
         }
 
         // GET: /api/Customers/id

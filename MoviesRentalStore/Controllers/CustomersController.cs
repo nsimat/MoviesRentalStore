@@ -68,9 +68,9 @@ namespace MoviesRentalStore.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            var customers = _context.Customers.Include(x => x.MembershipType).ToList();
+            //var customers = _context.Customers.Include(x => x.MembershipType).ToList();
             
-            return View(customers);
+            return View();//(customers)
         }        
 
         public ActionResult Edit(int id)

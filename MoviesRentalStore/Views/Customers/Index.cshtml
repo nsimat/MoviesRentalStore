@@ -1,29 +1,86 @@
-﻿@model IEnumerable<MoviesRentalStore.Models.Customer>
+﻿@*@model IEnumerable<MoviesRentalStore.Models.Customer>*@
 @{
     ViewBag.Title = "Customers";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @Html.Partial("_NavBar")
-<h1>Customers</h1><br/>
+<h1>Customers</h1><br />
 
-<table class="table table-bordered table-hover">
+<p class="lead">
+    @Html.ActionLink("Add New Customer", "New", "Customers", null, new { @class = "btn btn-primary stretched-link" })<br />
+    Following customers are available in the database:
+</p>
+
+<table id="customers" class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th scope="col"><h2>Customer</h2></th>
+            <th scope="col"><h2>Customer Name</h2></th>
             <th scope="col"><h2>Membership Type</h2></th>
+            <th scope="col"><h2>Delete</h2></th>
         </tr>
     </thead>
 
     <tbody>
-        @foreach (var customer in Model)
-        {
-            <tr class="table-active">
-                <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new {Id = customer.Id } , new { @scope="row" })</td>
-                @*<th scope="row"><a href="~/Customers/Edit/@customer.Id"><h3>@customer.Name</h3></a></th>*@
-                <td>@customer.MembershipType.Name</td>
-            </tr>
-        }
+        @*@foreach (var customer in Model)
+            {
+                <tr class="table-active">
+                    <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { Id = customer.Id }, new { @scope = "row" })</td>
+                    <td>@customer.MembershipType.Name</td>
+                    <td>
+                        <button data-customer-id="@customer.Id" class="btn btn-primary stretched-link js-delete">Delete</button>
+                    </td>
+                </tr>
+            }*@
     </tbody>
 </table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#customers").DataTable({
+                ajax: {
+                    url: "/api/customers",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, customer) {
+                            return "<a href='/customers/Edit/" + customer.id + "'>" + customer.name + "</a>";
+                        }
+                    },
+                    {
+                        data: "membershipType.name"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn btn-primary strecched-link js-delete' data-customer-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+            });
+
+
+            $("#customers").on("click", ".js-delete", function () {
+                var button = $(this);
+
+                bootbox.confirm("Are you sure you want to delete this customer?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/Customers/" + button.attr("data-customer-id"),
+                            method: "DELETE",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();                                
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
+
 

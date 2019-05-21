@@ -12,16 +12,18 @@ namespace MoviesRentalStore.App_Start
     {
         public MappingProfile()
         {
-            //From Model to Dto 
+            //From Domain Model to Dto 
             CreateMap<Customer, CustomerDto>();
             CreateMap<Movie, MovieDto>();
             CreateMap<Genre, GenreDto>();
+            CreateMap<MembershipType, MembershipTypeDto>();
 
 
-            //From Dto to Model
-            CreateMap<CustomerDto, Customer>();
-            CreateMap<MovieDto, Movie>();
+            //From Dto to Domain Model
+            CreateMap<CustomerDto, Customer>().ForMember(c => c.Id, opt => opt.Ignore());
+            CreateMap<MovieDto, Movie>().ForMember(m => m.Id, opt => opt.Ignore());
             CreateMap<GenreDto, Genre>();
+            CreateMap<MembershipTypeDto, MembershipType>();
         }
     }
 }
