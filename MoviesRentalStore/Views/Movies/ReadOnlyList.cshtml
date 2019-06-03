@@ -1,0 +1,55 @@
+﻿@*@model IEnumerable<MoviesRentalStore.Models.Movie>*@
+@{
+    ViewBag.Title = "Movies";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_NavBar")
+
+<h1>Movies</h1>
+
+<p class="lead">   
+    Following movies are available in our store:
+</p>
+
+<table id="movies" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th scope="col"><h2>Movie Name</h2></th>
+            <th scope="col"><h2>Genre</h2></th>            
+        </tr>
+    </thead>
+
+    <tbody>
+        @*@foreach (var movie in Model)
+        {
+            <tr class="table-active">
+                <td>@Html.ActionLink(movie.Name, "Edit", "Movies", new { Id = movie.Id }, new { @scope = "row" })</td>
+                <td>@movie.Genre.Name</td>
+            </tr>
+        }*@
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#movies").DataTable({
+                ajax: {
+                    url: "/api/movies",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",                        
+                    },
+                    {
+                        data: "genre.name"
+                    }
+                ]
+            });            
+        });
+    </script>
+}
+
