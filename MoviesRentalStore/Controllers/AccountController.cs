@@ -156,7 +156,7 @@ namespace MoviesRentalStore.Controllers
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    IDCardNumber = model.IDCardNumber
+                    IDCardNumber = model.IdCardNumber
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -373,7 +373,12 @@ namespace MoviesRentalStore.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    IDCardNumber = model.IdCardNumber
+                };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
