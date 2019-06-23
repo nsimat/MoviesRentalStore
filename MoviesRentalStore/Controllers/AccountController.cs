@@ -156,7 +156,8 @@ namespace MoviesRentalStore.Controllers
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    IDCardNumber = model.IdCardNumber
+                    IDCardNumber = model.IdCardNumber,
+                    PhoneNumber = model.PhoneNumber
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

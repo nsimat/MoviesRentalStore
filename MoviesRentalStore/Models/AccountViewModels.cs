@@ -13,6 +13,12 @@ namespace MoviesRentalStore.Models
         [Required]
         [Display(Name = "ID Card Number")]
         public string IdCardNumber { get; set; }
+
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [StringLength(50)]
+        [Display(Name = "Phone")]
+        public string PhoneNumber { get; set; }
     }
 
     public class ExternalLoginListViewModel
@@ -89,6 +95,9 @@ namespace MoviesRentalStore.Models
         [Display(Name = "ID Card Number")]
         public string IdCardNumber { get; set; }
 
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone")]
         public string PhoneNumber { get; set; }
     }
 
