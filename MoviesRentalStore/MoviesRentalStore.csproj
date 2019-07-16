@@ -316,6 +316,10 @@
     <Compile Include="Migrations\201906281134142_AddRentalModel.Designer.cs">
       <DependentUpon>201906281134142_AddRentalModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907161948306_UpdateTableMovies.cs" />
+    <Compile Include="Migrations\201907161948306_UpdateTableMovies.Designer.cs">
+      <DependentUpon>201907161948306_UpdateTableMovies.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -508,6 +512,7 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\typeahead.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -753,6 +758,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906281134142_AddRentalModel.resx">
       <DependentUpon>201906281134142_AddRentalModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907161948306_UpdateTableMovies.resx">
+      <DependentUpon>201907161948306_UpdateTableMovies.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

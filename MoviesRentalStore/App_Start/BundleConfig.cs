@@ -28,6 +28,7 @@ namespace MoviesRentalStore
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-lumen.css",
                       "~/Content/datatables/css/datatables.bootstrap4.css",
+                      "~/Content/typeahead.css",
                       "~/Content/Site.css"));
         }
     }
