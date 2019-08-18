@@ -14,19 +14,29 @@ namespace MoviesRentalStore.Controllers.Api
     public class CustomersController : ApiController
     {
         private readonly ApplicationDbContext _context;
+        private readonly Mapper _mapper;
 
         public CustomersController()
         {
             _context = new ApplicationDbContext();
+            _mapper = new Mapper(MvcApplication._config);
         }
 
         // GET: /api/Customers
-        public IEnumerable<CustomerDto> GetAllCustomers()
+        public IHttpActionResult GetAllCustomers(string query = null)
         {
-            return _context.Customers
-                .Include(c => c.MembershipType)
+            var customersQuery = _context.Customers
+                .Include(c => c.MembershipType);
+
+            if (!String.IsNullOrWhiteSpace(query))
+                customersQuery = customersQuery.Where(c => c.Name.Contains(query));
+
+            //var mapper = MvcApplication._config
+            var customerDtos = customersQuery
                 .ToList()
-                .Select(Mapper.Map<Customer, CustomerDto>);
+                .Select(_mapper.Map<Customer, CustomerDto>);
+
+            return Ok(customerDtos);
         }
 
         // GET: /api/Customers/id
@@ -37,7 +47,7 @@ namespace MoviesRentalStore.Controllers.Api
             if (customer == null)
                 return NotFound();
 
-            return Ok(Mapper.Map<Customer, CustomerDto>(customer));
+            return Ok(_mapper.Map<Customer, CustomerDto>(customer));
         }
 
         // POST: /api/Customers/
@@ -47,7 +57,7 @@ namespace MoviesRentalStore.Controllers.Api
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var customer = Mapper.Map<CustomerDto, Customer>(customerDto);
+            var customer = _mapper.Map<CustomerDto, Customer>(customerDto);
             _context.Customers.Add(customer);
             _context.SaveChanges();
 
@@ -68,7 +78,7 @@ namespace MoviesRentalStore.Controllers.Api
             if (customerInDB == null)
                 throw new HttpResponseException(HttpStatusCode.NotFound);
 
-            Mapper.Map<CustomerDto, Customer>(customerDto, customerInDB);// ou aussi Mapper.Map(customerDto, customerInDB)
+            _mapper.Map<CustomerDto, Customer>(customerDto, customerInDB);// ou aussi Mapper.Map(customerDto, customerInDB)
 
             //customerInDB.Name = customerDto.Name;
             //customerInDB.BirthDate = customerDto.BirthDate;

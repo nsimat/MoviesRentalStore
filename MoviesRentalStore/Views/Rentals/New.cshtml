@@ -5,7 +5,7 @@
 
 <h2>New Rental Form</h2>
 
-<form>
+<form id="newRental">
     <div class="form-group">
         <label>Customer</label>
         <div class="tt-container">
@@ -27,8 +27,6 @@
     </div>
 
     <button class="btn btn-primary">Submit</button>
-
-
 </form>
 
 @section scripts
@@ -83,6 +81,23 @@
 
                 viewmodel.movieIds.push(movie.id);
             });
+
+            $("#newRental").submit(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "/api/newRentals",
+                    method: "post",
+                    data: viewmodel
+                })
+                    .done(function () {
+                        toastr.success("Rental successfully recorded");
+                    })
+                    .fail(function () {
+                        toastr.error("Something unexpected happened!");
+                    });
+            })
+
         });
     </script>
 }

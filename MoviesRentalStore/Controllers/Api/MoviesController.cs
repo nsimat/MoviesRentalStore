@@ -14,17 +14,28 @@ namespace MoviesRentalStore.Controllers.Api
     public class MoviesController : ApiController
     {
         private readonly ApplicationDbContext _context;
+        private readonly Mapper _mapper;
 
         public MoviesController()
         {
             _context = new ApplicationDbContext();
+            _mapper = new Mapper(MvcApplication._config);
         }
 
         // GET: api/Movies
         [HttpGet]
-        public IEnumerable<MovieDto> GetAllMovies()
+        public IEnumerable<MovieDto> GetAllMovies(string query = null)
         {
-            return _context.Movies.Include(m => m.Genre).ToList().Select(Mapper.Map<Movie, MovieDto>);
+            var moviesQuery = _context.Movies
+                   .Include(m => m.Genre)
+                   .Where(m => m.NumberAvailable > 0);
+
+            if (!String.IsNullOrWhiteSpace(query))
+                moviesQuery = moviesQuery.Where(m => m.Name.Contains(query));
+
+            return moviesQuery
+                   .ToList()
+                   .Select(_mapper.Map<Movie, MovieDto>);
         }
 
         // GET: api/Movies/5
@@ -36,7 +47,7 @@ namespace MoviesRentalStore.Controllers.Api
             if (movie == null)
                 return NotFound();
 
-            return Ok(Mapper.Map<Movie, MovieDto>(movie));
+            return Ok(_mapper.Map<Movie, MovieDto>(movie));
         }
 
         // POST: api/Movies
@@ -47,7 +58,7 @@ namespace MoviesRentalStore.Controllers.Api
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var movie = Mapper.Map<MovieDto, Movie>(movieDto);
+            var movie = _mapper.Map<MovieDto, Movie>(movieDto);
             _context.Movies.Add(movie);
             _context.SaveChanges();
 
@@ -69,7 +80,7 @@ namespace MoviesRentalStore.Controllers.Api
             if (movieInDB == null)
                 return NotFound();
 
-            Mapper.Map<MovieDto, Movie>(movieDto, movieInDB);
+            _mapper.Map<MovieDto, Movie>(movieDto, movieInDB);
 
             //movieInDB.Name = movie.Name;
             //movieInDB.GenreId = movie.GenreId;
